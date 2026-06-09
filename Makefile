@@ -6,6 +6,7 @@ help:
 	@echo "  make run-Alpha"
 	@echo "  make run-Pandora"
 	@echo "  make run-Codex"
+	@echo "  make run-Equinox"
 
 
 
