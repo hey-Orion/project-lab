@@ -2,11 +2,12 @@
 
 help:
 	@echo "Available commands:"
-	@echo "  make run-Tempus"
 	@echo "  make run-Alpha"
-	@echo "  make run-Pandora"
-	@echo "  make run-Codex"
-	@echo "  make run-Equinox"
+	@echo "  make run-Bravo"
+	@echo "  make run-Charlie"
+	@echo "  make run-Delta"
+	@echo "  make run-Echo"
+	@echo "  make run-Tempus"
 
 
 
