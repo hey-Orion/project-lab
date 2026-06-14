@@ -23,3 +23,4 @@ def fetch_api_data(url: str, retries: int = 2, delay: int = 1) -> list:
             delay *= 2 
 
     return []
+    
