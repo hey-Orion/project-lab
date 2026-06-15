@@ -1,6 +1,0 @@
-2026-06-15 22:08:55,663 - INFO - Starting Alpha Data Pipeline Process...
-2026-06-15 22:08:56,617 - INFO - API data fetched successfully
-2026-06-15 22:08:56,629 - INFO - Saved 10 valid records to Alpha/data/valid.csv
-2026-06-15 22:08:56,629 - INFO - No invalid records found
-2026-06-15 22:08:56,646 - INFO - Successfully transformed 10 unique records
-2026-06-15 22:08:56,646 - INFO - Data Pipeline run executed successfully.
