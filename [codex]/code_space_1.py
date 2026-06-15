@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from Alpha.main import ingest_payloads, transform_records  # Imports your logic
+from micro_sentinel import ingest_payloads, transform_records  # Imports your logic
 
 # Step 1: The Test Data Factory (Fixture)
 @pytest.fixture

@@ -1,15 +1,13 @@
-.PHONY: help run-%
-
-help:
-	@echo "Available commands:"
-	@echo "  make run-Alpha"
-	@echo "  make run-Bravo"
-	@echo "  make run-Charlie"
-	@echo "  make run-Delta"
-	@echo "  make run-Echo"
-	@echo "  make run-Tempus"
+install: requirements.txt
+	python -m pip install --upgrade pip
+	pip install -r requirements.txt
 
 
+# Alpha execution commands--
 
-run-%:
-	python -m $*.main
+test-Alpha:
+	python -m pytest -v Alpha/tests/
+
+run-Alpha:
+	python -m Alpha.main
+
