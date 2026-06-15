@@ -10,6 +10,5 @@ venv/
 # Environment files
 .env
 
-# Logs
-logs/
-!.gitkeep
+
+
