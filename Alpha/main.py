@@ -23,8 +23,6 @@ with open("Alpha/config/main_config.yaml", "r") as file:
 
 os.makedirs("Alpha/logs", exist_ok=True)
 
-# --- FIXED LOGGING CONFIGURATION ---
-# We configure the handlers manually to guarantee UTF-8 encoding on Windows
 file_handler = logging.FileHandler("Alpha/logs/pipeline.log", encoding="utf-8")
 console_handler = logging.StreamHandler(sys.stdout)
 
@@ -117,11 +115,7 @@ def valid_to_csv(valid_records: list) -> None:
     for i in range(0, len(df), chunk_size):
         chunk = df.iloc[i:i + chunk_size]
 
-        # FIX: "w" on the first chunk clears out the old file from previous runs.
-        # "a" on subsequent chunks safely appends the rest of the current run.
         current_mode = "w" if i == 0 else "a"
-        
-        # FIX: Only write the header on the very first chunk
         include_header = True if i == 0 else False
 
         chunk.to_csv(
@@ -169,36 +163,69 @@ def transform_records() -> pd.DataFrame:
     valid_csv_path = config["paths"]["valid"]
 
     if not os.path.exists(valid_csv_path):
-        logger.warning(f"Bronze file {valid_csv_path} does not exist yet.")
+        logger.warning(
+            f"Bronze file {valid_csv_path} does not exist yet."
+        )
         return pd.DataFrame()
 
     df = pd.read_csv(valid_csv_path)
-    
-    if "id" not in df.columns:
-        logger.error(f"Required column 'id' missing in {valid_csv_path}.")
+
+    required_columns = ["id"]
+
+    missing_columns = [
+        col
+        for col in required_columns
+        if col not in df.columns
+    ]
+
+    if missing_columns:
+        logger.error(
+            f"Missing required columns: {missing_columns}"
+        )
         return pd.DataFrame()
 
-    # --- ADD THIS TO REMOVE DUPLICATES ---
-    # Keeps the last occurrence (most recent timestamp) and drops older duplicates
-    df = df.drop_duplicates(subset=["id"], keep="last")
-    # -------------------------------------
+    df = (
+        df
+        .dropna(subset=["id"])
+        .drop_duplicates(subset=["id"], keep="last")
+    )
 
-    df = df.dropna(subset=["id"])
-    df["email"] = df["email"].str.strip().str.lower()
-    df["username"] = df["username"].str.strip().str.lower()
-    df["website"] = df["website"].fillna("N/A")
-    df["timestamp"] = df["timestamp"].fillna(datetime.now().isoformat())
+    if "email" in df.columns:
+        df["email"] = (
+            df["email"]
+            .fillna("")
+            .str.strip()
+            .str.lower()
+        )
 
-    logger.info(f"Successfully transformed {len(df)} unique records")
+    if "username" in df.columns:
+        df["username"] = (
+            df["username"]
+            .fillna("")
+            .str.strip()
+            .str.lower()
+        )
+
+    if "website" in df.columns:
+        df["website"] = df["website"].fillna("N/A")
+
+    if "timestamp" in df.columns:
+        df["timestamp"] = df["timestamp"].fillna(
+            datetime.now().isoformat()
+        )
+
+    logger.info(
+        f"Successfully transformed {len(df)} unique records"
+    )
+
     return df
 
 
 def main():
     logger.info(
-        "🎬 Starting Alpha Data Pipeline Process..."
+        "Starting Alpha Data Pipeline Process..."
     )
 
-    # 1. Extraction Tier
     if not API_URL:
         logger.error(
             "Environment configuration missing: API_URL variable not loaded."
@@ -220,9 +247,8 @@ def main():
 
     clean_df = transform_records()
 
-
     logger.info(
-        "🎉Data Pipeline run executed successfully."
+        "Data Pipeline run executed successfully."
     )
 
 
