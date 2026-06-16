@@ -21,12 +21,13 @@ API_URL = os.getenv("API_URL")
 with open("Alpha/config/main_config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
+
 os.makedirs("Alpha/logs", exist_ok=True)
 
 file_handler = logging.FileHandler("Alpha/logs/pipeline.log", encoding="utf-8")
 console_handler = logging.StreamHandler(sys.stdout)
 
-# Force the console handler to use UTF-8 if it's available, bypassing the Windows CP1252 default
+
 if hasattr(console_handler.stream, "reconfigure"):
     console_handler.stream.reconfigure(encoding="utf-8")
 

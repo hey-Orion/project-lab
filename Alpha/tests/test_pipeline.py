@@ -1,5 +1,4 @@
 import pytest
-
 from Alpha.main import ingest_payloads
 
 
@@ -15,7 +14,6 @@ def valid_record():
         "timestamp": "2026-06-15T20:00:00"
     }
 
-
 @pytest.fixture
 def invalid_record():
     return {
@@ -23,12 +21,12 @@ def invalid_record():
         "name": "Corrupted Data",
         "username": "bad_user",
         "email": "not-an-email",
-        "phone": "000",
+        "phone": "000-4563",
         "website": "malicious.site"
     }
 
 
-def test_valid_record_passes_quality_gate(valid_record):
+def test_valid_record(valid_record):
     valid, invalid = ingest_payloads([valid_record])
 
     assert len(valid) == 1
@@ -38,7 +36,7 @@ def test_valid_record_passes_quality_gate(valid_record):
     assert valid[0]["name"] == "Jane Doe"
 
 
-def test_invalid_record_fails_quality_gate(invalid_record):
+def test_invalid_record(invalid_record):
     valid, invalid = ingest_payloads([invalid_record])
 
     assert len(valid) == 0
@@ -47,10 +45,11 @@ def test_invalid_record_fails_quality_gate(invalid_record):
     assert invalid[0]["index"] == 0
 
 
-def test_mixed_records_are_separated_correctly(
+def test_mixed_records(
     valid_record,
     invalid_record
 ):
+
     valid, invalid = ingest_payloads(
         [
             valid_record,
@@ -59,7 +58,9 @@ def test_mixed_records_are_separated_correctly(
     )
 
     assert len(valid) == 1
-    assert len(invalid) == 1
+    assert len(invalid) == 1 
 
     assert valid[0]["id"] == 10
-    assert invalid[0]["index"] == 1
+    assert invalid[0]["index"] == 1 
+
+    

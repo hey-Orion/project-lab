@@ -11,3 +11,11 @@ test-Alpha:
 run-Alpha:
 	python -m Alpha.main
 
+
+# Bravo execution commands--
+
+test-Bravo:
+	python -m pytest -v Bravo/tests/
+
+run-Bravo:
+	python -m Bravo.main
