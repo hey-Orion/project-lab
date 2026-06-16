@@ -104,7 +104,7 @@ def valid_to_csv(valid_records: list) -> None:
         return
 
     output_csv = config["paths"]["valid"]
-    chunk_size = config["processing"]["chunk_size"]
+    chunk_size = config["chunk"]["size"]
 
     os.makedirs(
         os.path.dirname(output_csv),
@@ -165,7 +165,7 @@ def transform_records() -> pd.DataFrame:
 
     if not os.path.exists(valid_csv_path):
         logger.warning(
-            f"Bronze file {valid_csv_path} does not exist yet."
+            f"{valid_csv_path} does not exist yet."
         )
         return pd.DataFrame()
 

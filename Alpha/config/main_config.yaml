@@ -2,5 +2,5 @@ paths:
   valid: Alpha/data/valid.csv
   invalid: Alpha/data/invalid.json
   
-processing:
-  chunk_size: 1000
+chunks:
+  size: 1000
