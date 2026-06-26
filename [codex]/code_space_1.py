@@ -1,114 +1,38 @@
-def transform_records() -> pd.DataFrame:
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+default_args = {
+    "owner": "dataops_bravo",
+    "depends_on_past": False,
+    "email_on_failure": False,
+    "retries": 1,
+    "retry_delay": timedelta(minutes=2),
+}
+
+with DAG(
+    dag_id="bravo_v1",
+    default_args=default_args,
+    desc="airflow dag v1",
+    schedule_interval="@daily",
+    start_date=datetime(2026, 1, 1),
+    catchup=False,
+) as dag:
+
+    def run_ingestion():
+        print("step 1 ")
     
-    valid_csv_path = config["paths"]["valid"]
+    def run_validation():
+        print("step 2")
 
-    if not os.path.exists(valid_csv_path):
-        logger.warning(
-            f"{valid_csv_path} does not exist yet."
-        )
-        return pd.DataFrame()
-
-    df = pd.read_csv(valid_csv_path)
-
-    required_columns = ["id"]
-
-    missing_columns = [
-        col
-        for col in required_columns
-        if col not in df.columns
-    ]
-
-    if missing_columns:
-        logger.error(
-            f"Missing required columns: {missing_columns}"
-        )
-        return pd.DataFrame()
-
-    df = (
-        df
-        .dropna(subset=["id"])
-        .drop_duplicates(subset=["id"], keep="last")
+    one_task = PythonOperator(
+        task_id="bravo_pull",
+        python_callable=run_ingestion,
     )
 
-    if "email" in df.columns:
-        df["email"] = (
-            df["email"]
-            .fillna("")
-            .str.strip()
-            .str.lower()
-        )
-
-    if "username" in df.columns:
-        df["username"] = (
-            df["username"]
-            .fillna("")
-            .str.strip()
-            .str.lower()
-        )
-
-    if "website" in df.columns:
-        df["website"] = df["website"].fillna("N/A")
-
-    if "timestamp" in df.columns:
-        df["timestamp"] = df["timestamp"].fillna(
-            datetime.now().isoformat()
-        )
-
-    logger.info(
-        f"Successfully transformed {len(df)} unique records"
+    two_task = PythonOperator(
+        task_id="bravo_clean",
+        python_callable=run_validation,
     )
 
-    return df
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def main():
-    logger.info(
-        "Starting Alpha Data Pipeline Process..."
-    )
-
-    if not API_URL:
-        logger.error(
-            "Environment configuration missing: API_URL variable not loaded."
-        )
-        return
-
-    raw_payloads = fetch_api_data(API_URL)
-
-    if not raw_payloads:
-        logger.warning(
-            "Pipeline run completed early: No raw records fetched from target stream."
-        )
-        return
-
-    valid, invalid = ingest_payloads(raw_payloads)
-
-    valid_to_csv(valid)
-    invalid_to_json(invalid)
-
-    clean_df = transform_records()
-
-    logger.info(
-        "Data Pipeline run executed successfully."
-    )
-
-
-if __name__ == "__main__":
-    main()
-
+    one_task >> two_task
