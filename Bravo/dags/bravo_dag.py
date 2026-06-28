@@ -23,11 +23,13 @@ with DAG(
 task_1 = PythonOperator(
     task_id="one",
     python_callable=run_extraction,
+    provide_context=True,
 )
 
 task_2 = PythonOperator(
     task_id="two",
     python_callable=run_validation
+    provide_context=True,
 )
 
 task_1 >> task_2
