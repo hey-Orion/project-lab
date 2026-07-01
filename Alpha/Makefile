@@ -1,14 +1,14 @@
-.PHONY: install test Alpha run Alpha test Bravo run Bravo Bravo up Bravo down
+.PHONY: install test run
 
 install: requirements.txt
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
 
-# Alpha execution commands--
+# execution commands--
 
-test Alpha:
-        python -m pytest -v Alpha/tests/
+test:
+        python -m pytest -v tests/
 
-run Alpha:
-        python -m Alpha.main
+run:
+        python -m.main

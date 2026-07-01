@@ -1,5 +1,5 @@
 import pytest
-from Alpha.main import ingest_payloads
+from src.main import ingest_payloads
 
 
 @pytest.fixture

@@ -18,7 +18,7 @@ load_dotenv()
 API_URL = os.getenv("API_URL")
 
 
-with open("Alpha/config/main_config.yaml", "r") as file:
+with open("Alpha/config/config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
 
