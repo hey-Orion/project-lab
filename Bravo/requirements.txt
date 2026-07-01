@@ -1,8 +1,0 @@
-pandas
-requests
-python-dotenv
-Pyyaml
-pydantic
-sqlalchemy
-psycopg2-binary
-pytest

@@ -1,19 +1,12 @@
-.PHONY: install test run up down
+.PHONY: install up down
 
-install: requirements.txt
-	python -m pip install --upgrade pip
-	pip install -r requirements.txt
-
-
-# execution commands--
-
-test :
-	python -m pytest -v tests/
-
-run :
-	python -m src.main
+install:
+	python3 -m pip install --upgrade pip
+	pip3 install pytest apache-airflow
 
 up:
+	docker compose up --build -d
 
 down:
+	docker compose down -v
 

@@ -18,13 +18,13 @@ load_dotenv()
 API_URL = os.getenv("API_URL")
 
 
-with open("Alpha/config/config.yaml", "r") as file:
+with open("config/config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
 
-os.makedirs("Alpha/logs", exist_ok=True)
+os.makedirs("logs", exist_ok=True)
 
-file_handler = logging.FileHandler("Alpha/logs/pipeline.log", encoding="utf-8")
+file_handler = logging.FileHandler("logs/pipeline.log", encoding="utf-8")
 console_handler = logging.StreamHandler(sys.stdout)
 
 

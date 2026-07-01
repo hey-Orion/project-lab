@@ -1,6 +1,6 @@
 paths:
-  valid: Alpha/data/valid.csv
-  invalid: Alpha/data/invalid.json
-  
-chunks:
+  valid: data/valid.csv
+  invalid_json: data/invalid.jsonl
+
+chunk:
   size: 1000

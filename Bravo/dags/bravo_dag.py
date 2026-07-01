@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from aiflow.operators import PythonOperator
+from airflow.operators.python import PythonOperator 
 
-from Bravo.src.main import run_extraction, run_validation
+from src.tasks import run_extraction, run_validation 
 
 default_args = {
     "owner": "Bravo",
@@ -14,22 +14,22 @@ default_args = {
 with DAG(
     dag_id="007",
     default_args=default_args,
-    schedule_interval="@daily",
+    schedule="@daily",
     start_date=datetime(2026, 1, 1),
     catchup=False,
     tags=["bro"],
 ) as dag:
 
-task_1 = PythonOperator(
-    task_id="one",
-    python_callable=run_extraction,
-    provide_context=True,
-)
+    task_1 = PythonOperator(
+        task_id="one",
+        python_callable=run_extraction,
+        provide_context=True,
+    )
 
-task_2 = PythonOperator(
-    task_id="two",
-    python_callable=run_validation
-    provide_context=True,
-)
+    task_2 = PythonOperator(
+        task_id="two",
+        python_callable=run_validation, 
+        provide_context=True,
+    )
 
-task_1 >> task_2
+    task_1 >> task_2
