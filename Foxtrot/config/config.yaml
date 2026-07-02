@@ -1,0 +1,9 @@
+pipeline:
+  timeout: 5
+
+paths:
+  VALIDATED_DATA: "data/validated/records.json"
+
+  REJECTED_DATA: "data/rejected/rejected_records.json"
+
+  LOGS: "logs"

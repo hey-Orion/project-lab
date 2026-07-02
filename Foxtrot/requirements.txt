@@ -1,0 +1,9 @@
+pandas
+pydantic
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+PyYAML
+requests
+pytest
+dotenv
