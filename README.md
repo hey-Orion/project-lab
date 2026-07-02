@@ -1,4 +1,4 @@
-# Project Lab
+# project-lab
 
 A collection of hands-on projects and experiments focused on Data Engineering, DataOps, and related technologies.
 
