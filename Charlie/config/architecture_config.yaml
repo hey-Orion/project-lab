@@ -1,0 +1,14 @@
+pipeline:
+  name: "charlie"
+  version: "1.0"
+  log_level: "INFO"
+
+api_endpoints:
+  weather_url: "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation"
+  transit_url: "https://api.mockaroo.com/api/transit_mock_feed"
+
+storage:
+  output_dir: "data"
+  files:
+    weather_events: "weather_logs.csv"
+    transit_events: "transit_logs.csv"
