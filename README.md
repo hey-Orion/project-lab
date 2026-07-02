@@ -12,4 +12,6 @@ This repository serves as an archive of my learning projects.
 - Automation experiments
 - Tool and framework exploration
 
-### Note: This is a learning project archive. Projects may be experimental, incomplete, or change over time.
+### Note: 
+
+This is a learning project archive. Projects may be experimental, incomplete, or change over time.
