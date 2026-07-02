@@ -1,27 +1,13 @@
-.PHONY: install test Alpha run Alpha test Bravo run Bravo Bravo up Bravo down
+.PHONY: install test run
 
 install: requirements.txt
-	python -m pip install --upgrade pip
-	pip install -r requirements.txt
+	python3 -m pip install --upgrade pip
+	pip3 install -r requirements.txt
 
+# execution commands--
 
-# Alpha execution commands--
+test:
+	python3 -m pytest -v tests/
 
-test Alpha:
-	python -m pytest -v Alpha/tests/
-
-run Alpha:
-	python -m Alpha.main
-
-
-# Bravo execution commands--
-
-test Bravo:
-	python -m pytest -v Bravo/tests/
-
-run Bravo:
-	python -m Bravo.main
-
-Bravo up:
-
-Bravo down:
+run:
+	python3 -m src.pipeline_runner

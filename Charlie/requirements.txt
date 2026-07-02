@@ -1,0 +1,7 @@
+requests
+pyyaml
+pandas
+pydantic
+python-dotenv
+pytest
+apache-airflow
