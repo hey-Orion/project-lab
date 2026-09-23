@@ -1,6 +1,6 @@
 # project-lab
 
-A collection of hands-on projects and experiments focused on Data Engineering, DataOps, and related technologies.
+A collection of hands-on projects and experiments focused on Data Engineering and related technologies.
 
 This repository serves as an archive of my learning projects.
 
