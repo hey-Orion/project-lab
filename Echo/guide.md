@@ -59,7 +59,7 @@ my_dbt_project/
 version: 2
 
 sources:
-  - name: raw
+  - name: raw_data
     schema: public
     tables:
       - name: orders
@@ -74,7 +74,7 @@ SELECT
     order_date,
     amount,
     LOWER(TRIM(status)) AS status  -- normalize messy status strings, same idea as your Pandas cleaning
-FROM {{ source('raw', 'orders') }}
+FROM {{ source('raw_data', 'orders') }}
 WHERE amount IS NOT NULL
 ```
 
